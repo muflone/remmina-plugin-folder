@@ -1,5 +1,5 @@
-# Project name : Remmina Plugin WEBKIT
-# Remmina protocol plugin to launch a GTK+ Webkit browser.
+# Project name : Remmina Plugin FOLDER
+# Remmina protocol plugin to open a folder.
 #
 # Copyright (C) 2012-2013 Fabio Castelli <muflone@vbsimple.net>
 #
