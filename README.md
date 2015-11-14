@@ -1,8 +1,47 @@
-    Project: Remmina Plugin FOLDER
-Description: Remmina protocol plugin to open a folder.
-     Author: Fabio Castelli (Muflone) <muflone@vbsimple.net>
-  Copyright: 2012-2016 Fabio Castelli (Muflone)
-    License: GPL-2+
+# Remmina Plugin FOLDER
+
+**Author**: Fabio Castelli (Muflone) <muflone@vbsimple.net>
+
+**Home page**: http://www.muflone.com/remmina-plugin-folder/
+
+**Copyright**: 2012-2016 Fabio Castelli (Muflone)
+
+**License**: GPL-2+
+
+**Status**: [![Build Status](https://travis-ci.org/muflone/remmina-plugin-folder.svg?branch=master)](https://travis-ci.org/muflone/remmina-plugin-folder)
+
+## Description
+
+A [**Remmina**](https://github.com/freerdp/remmina) protocol plugin to open a
+folder in a file manager from a Remmina connection.
+
+![Main window](http://www.muflone.com/resources/remmina-plugin-folder/archive/latest/english/general.png)
+
+## Install instructions
+
+Download and extract [**Remmina Plugin Builder**](https://github.com/muflone/remmina-plugin-builder/releases/):
+
+    wget -O remmina-plugin-builder.tar.gz https://github.com/muflone/remmina-plugin-builder/archive/1.2.1.0.tar.gz
+    tar --extract --verbose --gzip --file remmina-plugin-builder.tar.gz
+  
+Copy the plugin source files to the **remmina-plugin-to-build** directory:
+
+    cp --recursive remmina-plugin-folder CMakeLists.txt remmina-plugin-builder-1.2.1.0/remmina-plugin-to-build/
+
+Build the plugin using Remmina Plugin Builder:
+
+    cd remmina-plugin-builder-1.2.1.0
+    cmake -DCMAKE_INSTALL_PREFIX=/usr .
+    make
+  
+Install the plugin into the Remmina plugins directory (may need sudo or root
+access):
+
+    sudo make install
+
+You'll find it in the remmina connection editor.
+
+## License
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
