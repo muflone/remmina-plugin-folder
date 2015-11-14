@@ -1,7 +1,7 @@
 #     Project: Remmina Plugin FOLDER
 # Description: Remmina protocol plugin to open a folder.
 #      Author: Fabio Castelli (Muflone) <muflone@vbsimple.net>
-#   Copyright: 2012-2014 Fabio Castelli (Muflone)
+#   Copyright: 2012-2016 Fabio Castelli (Muflone)
 #     License: GPL-2+
 #
 # This program is free software; you can redistribute it and/or modify
