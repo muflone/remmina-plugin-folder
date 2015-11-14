@@ -25,6 +25,7 @@
   # include <gtk/gtkx.h>
 #endif
 
+// Define the launchers list
 static gpointer launchers_list[] =
 {
   "xdg-open", "Automatically detected",
@@ -49,12 +50,6 @@ static gboolean remmina_plugin_folder_open_connection(RemminaProtocolWidget *gp)
   remmina_plugin_service->log_printf("[%s] Plugin open connection\n", PLUGIN_NAME);
   #define GET_PLUGIN_STRING(value) \
     g_strdup(remmina_plugin_service->file_get_string(remminafile, value))
-  #define GET_PLUGIN_BOOLEAN(value) \
-    remmina_plugin_service->file_get_int(remminafile, value, FALSE)
-  #define GET_PLUGIN_INT(value, default_value) \
-    remmina_plugin_service->file_get_int(remminafile, value, default_value)
-  #define GET_PLUGIN_PASSWORD(value) \
-    g_strdup(remmina_plugin_service->file_get_secret(remminafile, value));
 
   RemminaFile *remminafile;
   gboolean ret;
@@ -71,7 +66,7 @@ static gboolean remmina_plugin_folder_open_connection(RemminaProtocolWidget *gp)
   argv[argc++] = g_strdup(GET_PLUGIN_STRING("server"));
   argv[argc++] = NULL;
 
-  ret = g_spawn_async (NULL, argv, NULL, G_SPAWN_SEARCH_PATH,
+  ret = g_spawn_async(NULL, argv, NULL, G_SPAWN_SEARCH_PATH,
     NULL, NULL, &pid, &error);
 
   for (i = 0; i < argc; i++)
@@ -91,6 +86,15 @@ static gboolean remmina_plugin_folder_close_connection(RemminaProtocolWidget *gp
   return FALSE;
 }
 
+/* Array of RemminaProtocolSetting for basic settings.
+ * Each item is composed by:
+ * a) RemminaProtocolSettingType for setting type
+ * b) Setting name
+ * c) Setting description
+ * d) Compact disposition
+ * e) Values for REMMINA_PROTOCOL_SETTING_TYPE_SELECT or REMMINA_PROTOCOL_SETTING_TYPE_COMBO
+ * f) Unused pointer
+ */
 static const RemminaProtocolSetting remmina_plugin_folder_basic_settings[] =
 {
   { REMMINA_PROTOCOL_SETTING_TYPE_TEXT, "server", N_("Startup program"), FALSE, NULL, NULL },
@@ -98,24 +102,26 @@ static const RemminaProtocolSetting remmina_plugin_folder_basic_settings[] =
   { REMMINA_PROTOCOL_SETTING_TYPE_END, NULL, NULL, FALSE, NULL, NULL }
 };
 
+/* Protocol plugin definition and features */
 static RemminaProtocolPlugin remmina_plugin =
 {
-  REMMINA_PLUGIN_TYPE_PROTOCOL,
-  PLUGIN_NAME,
-  PLUGIN_DESCRIPTION,
-  GETTEXT_PACKAGE,
-  PLUGIN_VERSION,
-  PLUGIN_APPICON,
-  PLUGIN_APPICON,
-  remmina_plugin_folder_basic_settings,
-  NULL,
-  REMMINA_PROTOCOL_SSH_SETTING_NONE,
-  NULL,
-  remmina_plugin_folder_init,
-  remmina_plugin_folder_open_connection,
-  remmina_plugin_folder_close_connection,
-  NULL,
-  NULL
+  REMMINA_PLUGIN_TYPE_PROTOCOL,                 // Type
+  PLUGIN_NAME,                                  // Name
+  PLUGIN_DESCRIPTION,                           // Description
+  GETTEXT_PACKAGE,                              // Translation domain
+  PLUGIN_VERSION,                               // Version number
+  PLUGIN_APPICON,                               // Icon for normal connection
+  PLUGIN_APPICON,                               // Icon for SSH connection
+  remmina_plugin_folder_basic_settings,         // Array for basic settings
+  NULL,                                         // Array for advanced settings
+  REMMINA_PROTOCOL_SSH_SETTING_NONE,            // SSH settings type
+  NULL,                                         // Array for available features
+  remmina_plugin_folder_init,                   // Plugin initialization
+  remmina_plugin_folder_open_connection,        // Plugin open connection
+  remmina_plugin_folder_close_connection,       // Plugin close connection
+  NULL,                                         // Query for available features
+  NULL,                                         // Call a feature
+  NULL                                          // Send a keystroke
 };
 
 G_MODULE_EXPORT gboolean remmina_plugin_entry(RemminaPluginService *service)
